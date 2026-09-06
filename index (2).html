@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Abrar — Computer Science & Artificial Intelligence graduate portfolio." />
+  <title>Abrar — AI & Data Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --navy:#132A52; --blue:#1B3A6B; --blue2:#2F5FA8;
+      --rose:#E58FB0; --rose2:#C96488; --ink:#17243a;
+      --muted:#66738a; --paper:#fbfaf8; --white:#fff;
+      --line:#dfe5ee; --shadow:0 20px 60px rgba(19,42,82,.10);
+      --serif:"Fraunces", Georgia, serif; --sans:"Inter", Arial, sans-serif;
+      --radius:22px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.65}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1120px,calc(100% - 40px));margin:auto}
+    .eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--rose2);margin-bottom:12px}
+    h1,h2,h3{font-family:var(--serif);line-height:1.05;color:var(--navy)}
+    h2{font-size:clamp(2rem,4vw,3.15rem);margin-bottom:16px}
+    p{color:var(--muted)}
+    section{padding:105px 0;scroll-margin-top:80px}
+    .section-head{max-width:700px;margin-bottom:48px}
+    .section-head p{font-size:1.02rem}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:50;background:rgba(251,250,248,.90);backdrop-filter:blur(16px);border-bottom:1px solid rgba(19,42,82,.08)}
+    nav{height:76px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-family:var(--serif);font-weight:700;font-size:1.45rem;color:var(--navy);letter-spacing:-.02em}
+    .brand span{color:var(--rose2)}
+    .nav-links{display:flex;align-items:center;gap:30px;font-size:.88rem;font-weight:600;color:#4c5b73}
+    .nav-links a{transition:.2s}
+    .nav-links a:hover{color:var(--rose2)}
+    .nav-cta{border:1px solid var(--navy);padding:9px 16px;border-radius:999px;color:var(--navy)}
+    .nav-cta:hover{background:var(--navy);color:white!important}
+    .menu{display:none;border:0;background:none;font-size:1.5rem;color:var(--navy)}
+
+    /* HERO */
+    .hero{min-height:calc(100vh - 76px);display:flex;align-items:center;padding:70px 0 90px;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
+    .hero h1{font-size:clamp(3.5rem,8vw,6.6rem);letter-spacing:-.055em;margin-bottom:22px}
+    .hero h1 em{font-style:normal;color:var(--rose2)}
+    .role{font-size:1.05rem;font-weight:700;color:var(--blue2);margin-bottom:15px}
+    .intro{font-size:1.08rem;max-width:610px;margin-bottom:30px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 21px;border-radius:999px;font-weight:700;font-size:.88rem;transition:.25s;border:1px solid transparent}
+    .btn-primary{background:var(--navy);color:white}
+    .btn-primary:hover{background:var(--blue2);transform:translateY(-2px)}
+    .btn-secondary{border-color:#b8c2d1;color:var(--navy);background:white}
+    .btn-secondary:hover{border-color:var(--rose2);color:var(--rose2);transform:translateY(-2px)}
+    .hero-art{position:relative;min-height:480px;border-radius:42% 58% 54% 46% / 38% 45% 55% 62%;background:linear-gradient(145deg,#eef3fb,#fff);border:1px solid #dce5f1;box-shadow:var(--shadow);display:grid;place-items:center}
+    .hero-art:before,.hero-art:after{content:"";position:absolute;border-radius:50%;filter:blur(1px)}
+    .hero-art:before{width:170px;height:170px;background:rgba(229,143,176,.16);top:45px;right:45px}
+    .hero-art:after{width:130px;height:130px;background:rgba(47,95,168,.10);bottom:50px;left:30px}
+    .network{width:88%;max-width:480px;position:relative;z-index:1}
+    .network line{stroke:#8ea7cc;stroke-width:1.5}
+    .network circle{fill:#fff;stroke:var(--blue2);stroke-width:2.5}
+    .network .pink{stroke:var(--rose2)}
+    .network .core{fill:var(--navy);stroke:var(--navy)}
+    .scroll-note{margin-top:45px;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:#8b96a8}
+
+    /* ABOUT */
+    .about{background:#fff}
+    .about-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:80px}
+    .about-copy p{font-size:1.08rem;margin-bottom:18px}
+    .education{border-left:2px solid var(--rose);padding-left:25px;margin-top:28px}
+    .education strong{display:block;color:var(--navy);font-family:var(--serif);font-size:1.2rem;margin-bottom:5px}
+    .education small{color:var(--rose2);font-weight:700}
+
+    /* EXPERIENCE */
+    .timeline{position:relative;margin-top:30px}
+    .timeline:before{content:"";position:absolute;left:10px;top:10px;bottom:10px;width:1px;background:#ccd6e5}
+    .timeline-item{position:relative;padding-left:52px;margin-bottom:48px}
+    .dot{position:absolute;left:3px;top:7px;width:15px;height:15px;border-radius:50%;background:var(--paper);border:4px solid var(--blue2)}
+    .timeline-item:nth-child(2) .dot{border-color:var(--rose2)}
+    .timeline-meta{font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;color:var(--rose2);font-weight:700;margin-bottom:8px}
+    .timeline-item h3{font-size:1.5rem;margin-bottom:4px}
+    .company{color:var(--blue2);font-weight:700;margin-bottom:14px}
+    .timeline-item ul{padding-left:18px;color:var(--muted)}
+    .timeline-item li{margin:7px 0}
+
+    /* PROJECTS */
+    .projects{background:var(--navy)}
+    .projects h2,.projects .section-head p{color:white}
+    .projects .eyebrow{color:var(--rose)}
+    .project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    .project{background:#fff;border-radius:var(--radius);padding:30px;min-height:290px;display:flex;flex-direction:column;transition:.25s;border:1px solid rgba(255,255,255,.08)}
+    .project:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.18)}
+    .project-num{font-size:.76rem;letter-spacing:.15em;color:var(--rose2);font-weight:800;margin-bottom:28px}
+    .project h3{font-size:1.45rem;margin-bottom:12px}
+    .project p{font-size:.93rem;margin-bottom:22px}
+    .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
+    .tag{font-size:.72rem;font-weight:700;border:1px solid #d6deea;padding:5px 9px;border-radius:999px;color:var(--blue)}
+
+    /* LEADERSHIP */
+    .leadership-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px}
+    .achievement-list{display:grid;gap:14px;margin-top:24px}
+    .achievement{display:flex;gap:15px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+    .achievement b{color:var(--rose2);font-size:1.1rem}
+    .achievement span{font-weight:600;color:var(--navy)}
+    .skills{display:grid;gap:22px;margin-top:24px}
+    .skill h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--blue2);margin-bottom:7px}
+    .skill p{font-size:.93rem}
+
+    /* CONTACT */
+    .contact{background:#f2f5fa}
+    .contact-card{background:linear-gradient(135deg,var(--navy),#244b84);border-radius:30px;padding:60px;color:white;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;overflow:hidden;position:relative}
+    .contact-card:after{content:"";position:absolute;width:360px;height:360px;border:1px solid rgba(229,143,176,.28);border-radius:50%;right:-120px;bottom:-170px}
+    .contact-card h2{color:white}
+    .contact-card p{color:#d8e2f0;max-width:620px}
+    .contact-links{display:grid;gap:13px;position:relative;z-index:1}
+    .contact-link{padding:14px 17px;border:1px solid rgba(255,255,255,.2);border-radius:14px;color:white;background:rgba(255,255,255,.05);font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:.2s}
+    .contact-link:hover{border-color:var(--rose);background:rgba(229,143,176,.10)}
+
+    /* FOOTER */
+    footer{background:#0e2140;color:#aab9cf;padding:28px 0;font-size:.78rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:20px}
+    .footer-inner strong{color:white}
+
+    /* Custom cursor / name-follow effect */
+    body.cursor-active{cursor:none}
+    body.cursor-active a, body.cursor-active button{cursor:none}
+    .cursor-word{position:fixed;left:0;top:0;z-index:100;pointer-events:none;white-space:nowrap;font-family:var(--serif);font-size:clamp(3.2rem,8vw,7.5rem);font-weight:700;letter-spacing:-.07em;color:rgba(19,42,82,.075);transform:translate(-50%,-50%) scale(.78);transition:color .35s, transform .35s, opacity .35s;opacity:0;mix-blend-mode:multiply;will-change:transform,left,top}
+    .cursor-word span{display:block;font-family:var(--sans);font-size:.55rem;letter-spacing:.28em;text-align:center;color:rgba(201,100,136,.72);margin-top:-.2em}
+    .cursor-ring{position:fixed;left:0;top:0;width:34px;height:34px;border:1px solid rgba(47,95,168,.55);border-radius:50%;z-index:101;pointer-events:none;transform:translate(-50%,-50%);opacity:0;transition:width .25s,height .25s,border-color .25s,opacity .25s;will-change:left,top}
+    body.cursor-active .cursor-word,body.cursor-active .cursor-ring{opacity:1}
+    body.cursor-hover .cursor-word{color:rgba(201,100,136,.14);transform:translate(-50%,-50%) scale(1.08)}
+    body.cursor-hover .cursor-ring{width:58px;height:58px;border-color:rgba(201,100,136,.75)}
+    .cursor-trail{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--rose);pointer-events:none;z-index:99;transform:translate(-50%,-50%);opacity:0;will-change:left,top}
+    body.cursor-active .cursor-trail{opacity:.28}
+
+    @media(max-width:800px){
+      .cursor-word,.cursor-ring,.cursor-trail{display:none!important}
+
+      .container{width:min(100% - 28px,650px)}
+      section{padding:78px 0}
+      .nav-links{position:absolute;top:76px;left:0;right:0;background:rgba(251,250,248,.98);display:none;flex-direction:column;padding:20px;gap:18px;border-bottom:1px solid var(--line)}
+      .nav-links.open{display:flex}
+      .menu{display:block}
+      .hero{padding-top:55px}
+      .hero-grid,.about-grid,.leadership-grid,.contact-card{grid-template-columns:1fr;gap:38px}
+      .hero-art{min-height:350px;order:-1}
+      .hero h1{font-size:clamp(3.2rem,16vw,5rem)}
+      .project-grid{grid-template-columns:1fr}
+      .contact-card{padding:38px 28px}
+      .footer-inner{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+<div class="cursor-word" aria-hidden="true">ABRAR<span>AI · DATA · SOFTWARE</span></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-trail" aria-hidden="true"></div>
+<header>
+  <div class="container">
+    <nav aria-label="Primary navigation">
+      <a class="brand" href="#home">Abrar<span>.</span></a>
+      <button class="menu" aria-label="Open menu" aria-expanded="false">☰</button>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#leadership">Skills</a>
+        <a class="nav-cta" href="#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Computer Science × Artificial Intelligence</div>
+        <div class="role">AI • Data • Software</div>
+        <h1>Hi, I'm <em>Abrar</em>.</h1>
+        <p class="intro">A Computer Science & Artificial Intelligence graduate who enjoys turning data, language and machine learning into practical solutions.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects">View my work <span>↗</span></a>
+          <a class="btn btn-secondary" href="#contact">Get in touch</a>
+        </div>
+        <div class="scroll-note">Based in Salalah, Oman · Open to opportunities</div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <svg class="network" viewBox="0 0 500 500" fill="none">
+          <line x1="100" y1="130" x2="250" y2="100"/><line x1="250" y1="100" x2="390" y2="170"/>
+          <line x1="100" y1="130" x2="150" y2="300"/><line x1="150" y1="300" x2="250" y2="100"/>
+          <line x1="150" y1="300" x2="330" y2="270"/><line x1="330" y1="270" x2="390" y2="170"/>
+          <line x1="330" y1="270" x2="390" y2="390"/><line x1="150" y1="300" x2="100" y2="400"/>
+          <line x1="250" y1="100" x2="330" y2="270"/><line x1="100" y1="400" x2="250" y2="410"/>
+          <circle cx="100" cy="130" r="13"/><circle cx="250" cy="100" r="18" class="core"/>
+          <circle cx="390" cy="170" r="13" class="pink"/><circle cx="150" cy="300" r="17"/>
+          <circle cx="330" cy="270" r="13" class="pink"/><circle cx="390" cy="390" r="16"/>
+          <circle cx="100" cy="400" r="12" class="pink"/><circle cx="250" cy="410" r="14"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">01 — About</div>
+        <h2>Curious by nature, practical by design.</h2>
+      </div>
+      <div class="about-grid">
+        <div>
+          <p class="eyebrow">A little context</p>
+          <p>I’m Abrar, a Computer Science and Artificial Intelligence graduate based in Salalah, Oman. My interests sit at the intersection of machine learning, NLP and data analysis.</p>
+        </div>
+        <div class="about-copy">
+          <p>I graduated from the Modern College of Business and Science (MCBS) with a <strong>3.90/4.0 GPA</strong> and a place on the <strong>Dean's High Honor List</strong>.</p>
+          <p>Through internships, research and student leadership, I’ve worked across AI evaluation, NLP, dashboards, customer analytics and applied machine learning.</p>
+          <p>I’m currently looking for full-time roles in AI, data and software, while also weighing an offer to begin postgraduate study at the University of Portsmouth.</p>
+          <div class="education">
+            <small>EDUCATION</small>
+            <strong>BSc Computer Science & Artificial Intelligence</strong>
+            <p>Modern College of Business and Science (MCBS), Oman · GPA 3.90/4.0</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">02 — Experience</div>
+        <h2>Where I’ve learned by building.</h2>
+        <p>Hands-on experience across enterprise AI, NLP, customer analytics and data storytelling.</p>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item">
+          <span class="dot"></span>
+          <div class="timeline-meta">AI Department Intern</div>
+          <h3>Otech</h3>
+          <div class="company">Supervised by Dr. Haider Al-Lawati</div>
+          <ul>
+            <li>Benchmarked Otech's Mueen AI enterprise chatbot, reaching <strong>88% accuracy</strong>.</li>
+            <li>Built <strong>BrieflyAI</strong>, a document summarizer powered by the Groq API and Llama 3.3 70B.</li>
+            <li>Trained an NLP sentiment-analysis model on <strong>1.6 million tweets</strong>, reaching 77.83% accuracy.</li>
+            <li>Built and deployed a Mueen analysis pipeline using Streamlit.</li>
+            <li>Delivered an internship report, technical report and final presentation.</li>
+          </ul>
+        </article>
+        <article class="timeline-item">
+          <span class="dot"></span>
+          <div class="timeline-meta">Customer Value Management Intern</div>
+          <h3>Omantel</h3>
+          <div class="company">Supervised by Asma</div>
+          <ul>
+            <li>Ran a churn-analysis project on a telecom dataset and built an interactive dashboard.</li>
+            <li>Designed a CVM campaign targeting at-risk customers, backed by customer segmentation.</li>
+            <li>Produced a full Omantel-branded presentation of the findings.</li>
+            <li>Assisted with a PowerPoint redesign for the Client Services Department and drafted narration scripts for an AI-voiced animated presentation.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects" id="projects">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">03 — Selected work</div>
+        <h2>Projects with a purpose.</h2>
+        <p>Research, AI applications and analytics projects that reflect how I like to solve problems.</p>
+      </div>
+      <div class="project-grid">
+        <article class="project">
+          <div class="project-num">01 / RESEARCH</div>
+          <h3>Flood Detection: Comparing Feature Selection Methods</h3>
+          <p>BSc capstone comparing ten hybrid, embedded, ensemble and filter feature-selection methods on a flood-detection dataset from Bangladesh. Supervised by Dr. Hossein Nematzadeh; defended August 2026 and being extended into a conference paper.</p>
+          <div class="tags"><span class="tag">Machine Learning</span><span class="tag">Feature Selection</span><span class="tag">Research</span></div>
+        </article>
+        <article class="project">
+          <div class="project-num">02 / LLM</div>
+          <h3>BrieflyAI — Document Summarizer</h3>
+          <p>A document summarization tool built during the Otech internship, using the Groq API and Llama 3.3 70B to turn long documents into concise, useful summaries.</p>
+          <div class="tags"><span class="tag">LLMs</span><span class="tag">Groq API</span><span class="tag">NLP</span></div>
+        </article>
+        <article class="project">
+          <div class="project-num">03 / NLP</div>
+          <h3>Mueen Chatbot Benchmarking & Sentiment Model</h3>
+          <p>Benchmarked Otech's Mueen chatbot to 88% accuracy, trained a sentiment model on 1.6M tweets with 77.83% accuracy, and deployed the analysis workflow with Streamlit.</p>
+          <div class="tags"><span class="tag">NLP</span><span class="tag">Streamlit</span><span class="tag">Model Evaluation</span></div>
+        </article>
+        <article class="project">
+          <div class="project-num">04 / ANALYTICS</div>
+          <h3>Telco Churn Analysis & CVM Dashboard</h3>
+          <p>Interactive churn-analysis dashboard for Omantel's CVM team paired with a targeted retention campaign designed around customer segmentation and risk.</p>
+          <div class="tags"><span class="tag">Data Analysis</span><span class="tag">Dashboards</span><span class="tag">Customer Analytics</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="leadership">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">04 — Leadership & Skills</div>
+        <h2>Technology, teamwork and communication.</h2>
+      </div>
+      <div class="leadership-grid">
+        <div>
+          <div class="eyebrow">Leadership & achievements</div>
+          <div class="achievement-list">
+            <div class="achievement"><b>01</b><span>Vice President, Computer Science & Mathematics Society — MCBS</span></div>
+            <div class="achievement"><b>02</b><span>President, AI & ML Club — MCBS</span></div>
+            <div class="achievement"><b>03</b><span>Winner, Nudgeathon</span></div>
+            <div class="achievement"><b>04</b><span>Winner, NASA Space Apps Challenge</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow">Skills</div>
+          <div class="skills">
+            <div class="skill"><h4>AI & Machine Learning</h4><p>Machine Learning · NLP · LLMs (Llama 3.3, Groq API) · Model Benchmarking</p></div>
+            <div class="skill"><h4>Data & Analytics</h4><p>Data Analysis · Power BI · Streamlit · Dashboarding</p></div>
+            <div class="skill"><h4>Programming</h4><p>Python</p></div>
+            <div class="skill"><h4>Communication</h4><p>Arabic (fluent) · English (fluent) · Technical writing · Presentations</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-card">
+        <div>
+          <div class="eyebrow">05 — Contact</div>
+          <h2>Let’s build something meaningful.</h2>
+          <p>If you're hiring for an AI, data or software role—or simply want to talk about a project—I'd love to hear from you.</p>
+        </div>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:[your email]">✉ &nbsp; [your email]</a>
+          <a class="contact-link" href="tel:[your phone]">◌ &nbsp; [your phone]</a>
+          <a class="contact-link" href="[your LinkedIn URL]" target="_blank" rel="noopener">in &nbsp; [your LinkedIn URL]</a>
+          <a class="contact-link" href="[your GitHub URL]" target="_blank" rel="noopener">⌘ &nbsp; [your GitHub URL]</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 <strong>Abrar</strong>. Built with curiosity and code.</span>
+    <span>AI · Data · Software</span>
+  </div>
+</footer>
+
+<script>
+  const menu = document.querySelector('.menu');
+  const links = document.querySelector('.nav-links');
+  menu.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    menu.setAttribute('aria-expanded', open);
+    menu.textContent = open ? '×' : '☰';
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      links.classList.remove('open');
+      menu.setAttribute('aria-expanded', 'false');
+      menu.textContent = '☰';
+    });
+  });
+
+  // Desktop cursor: a large, soft ABRAR word follows the pointer.
+  // It scales up when hovering interactive elements and stays disabled on touch devices.
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+  if (finePointer) {
+    document.body.classList.add('cursor-active');
+    const word = document.querySelector('.cursor-word');
+    const ring = document.querySelector('.cursor-ring');
+    const trail = document.querySelector('.cursor-trail');
+    let x = innerWidth / 2, y = innerHeight / 2, tx = x, ty = y;
+    let lastX = x, lastY = y;
+    let speed = 0;
+    function move(){
+      x += (tx - x) * .14;
+      y += (ty - y) * .14;
+      word.style.left = x + 'px'; word.style.top = y + 'px';
+      ring.style.left = tx + 'px'; ring.style.top = ty + 'px';
+      trail.style.left = (x - (tx-x)*.35) + 'px'; trail.style.top = (y - (ty-y)*.35) + 'px';
+      speed *= .91;
+      const scale = .78 + Math.min(speed / 80, .38);
+      word.style.transform = `translate(-50%,-50%) scale(${scale})`;
+      requestAnimationFrame(move);
+    }
+    addEventListener('mousemove', e => {
+      tx = e.clientX; ty = e.clientY;
+      const dx = tx-lastX, dy = ty-lastY;
+      speed = Math.sqrt(dx*dx + dy*dy);
+      lastX = tx; lastY = ty;
+    });
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+    addEventListener('mouseleave', () => { word.style.opacity='0'; ring.style.opacity='0'; });
+    addEventListener('mouseenter', () => { word.style.opacity='1'; ring.style.opacity='1'; });
+    move();
+  }
+</script>
+</body>
+</html>
