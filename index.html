@@ -44,7 +44,7 @@
 
     /* HERO */
     .hero{min-height:calc(100vh - 76px);display:flex;align-items:center;padding:70px 0 90px;overflow:hidden}
-    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
+       .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center;perspective:1200px}
     .hero h1{font-size:clamp(3.5rem,8vw,6.6rem);letter-spacing:-.055em;margin-bottom:22px}
     .hero h1 em{font-style:normal;color:var(--rose2)}
     .role{font-size:1.05rem;font-weight:700;color:var(--blue2);margin-bottom:15px}
@@ -55,7 +55,12 @@
     .btn-primary:hover{background:var(--blue2);transform:translateY(-2px)}
     .btn-secondary{border-color:#b8c2d1;color:var(--navy);background:white}
     .btn-secondary:hover{border-color:var(--rose2);color:var(--rose2);transform:translateY(-2px)}
-    .hero-art{position:relative;min-height:480px;border-radius:42% 58% 54% 46% / 38% 45% 55% 62%;background:linear-gradient(145deg,#eef3fb,#fff);border:1px solid #dce5f1;box-shadow:var(--shadow);display:grid;place-items:center}
+      .hero-art{position:relative;min-height:480px;border-radius:42% 58% 54% 46% / 38% 45% 55% 62%;background:linear-gradient(145deg,#eef3fb,#fff);border:1px solid #dce5f1;box-shadow:var(--shadow);display:grid;place-items:center;transform-style:preserve-3d;animation:float3d 8s ease-in-out infinite}
+    @keyframes float3d{
+      0%{transform:rotateX(8deg) rotateY(-10deg) translateY(0)}
+      50%{transform:rotateX(-6deg) rotateY(8deg) translateY(-16px)}
+      100%{transform:rotateX(8deg) rotateY(-10deg) translateY(0)}
+    }
     .hero-art:before,.hero-art:after{content:"";position:absolute;border-radius:50%;filter:blur(1px)}
     .hero-art:before{width:170px;height:170px;background:rgba(229,143,176,.16);top:45px;right:45px}
     .hero-art:after{width:130px;height:130px;background:rgba(47,95,168,.10);bottom:50px;left:30px}
@@ -407,8 +412,9 @@
       word.style.left = x + 'px'; word.style.top = y + 'px';
       ring.style.left = tx + 'px'; ring.style.top = ty + 'px';
       trail.style.left = (x - (tx-x)*.35) + 'px'; trail.style.top = (y - (ty-y)*.35) + 'px';
-      speed *= .91;
-      const scale = .78 + Math.min(speed / 80, .38);
+         speed *= .91;
+      const hovering = document.body.classList.contains('cursor-hover');
+      const scale = hovering ? 0.45 : (.78 + Math.min(speed / 80, .38));
       word.style.transform = `translate(-50%,-50%) scale(${scale})`;
       requestAnimationFrame(move);
     }
