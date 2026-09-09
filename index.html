@@ -66,28 +66,40 @@
     .hero-art:after{width:130px;height:130px;background:rgba(47,95,168,.10);bottom:50px;left:30px}
     .scroll-note{margin-top:45px;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:#8b96a8}
 
-        .ai-orb{position:relative;width:320px;height:320px;margin:auto}
-    .orb-core{
-      position:absolute;top:50%;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;
-      border-radius:50%;background:var(--navy);
-      box-shadow:0 0 0 8px rgba(19,42,82,.10), 0 0 40px 6px rgba(47,95,168,.45);
-      animation:pulseCore 2.4s ease-in-out infinite;
+        .ai-neural-scene{
+      position:relative;width:min(430px,92%);aspect-ratio:1/1;margin:auto;
+      display:grid;place-items:center;transform-style:preserve-3d;
+      filter:drop-shadow(0 25px 45px rgba(19,42,82,.16));
     }
-    .orb-tilt{position:absolute;inset:0}
-    .orb-tilt-1{transform:rotateX(70deg)}
-    .orb-tilt-2{transform:rotateX(70deg) rotateZ(60deg)}
-    .orb-tilt-3{transform:rotateX(70deg) rotateZ(120deg)}
-    .orb-ring{
-      position:absolute;inset:0;border-radius:50%;
-      border:1.5px solid var(--blue2);
-      animation:spinRing 6s linear infinite;
+    #neuralCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:4;overflow:visible}
+    .neural-glow{
+      position:absolute;width:44%;height:44%;border-radius:50%;
+      background:radial-gradient(circle,rgba(47,95,168,.26),rgba(229,143,176,.12) 45%,transparent 72%);
+      filter:blur(10px);animation:coreFloat 4s ease-in-out infinite;z-index:1;
     }
-    .orb-ring-pink{border-color:var(--rose2);animation-duration:9s;animation-direction:reverse}
-    @keyframes spinRing{from{transform:rotateZ(0deg)}to{transform:rotateZ(360deg)}}
-    @keyframes pulseCore{
-      0%,100%{box-shadow:0 0 0 8px rgba(19,42,82,.10), 0 0 40px 6px rgba(47,95,168,.45)}
-      50%{box-shadow:0 0 0 14px rgba(19,42,82,.06), 0 0 60px 10px rgba(229,143,176,.5)}
+    .neural-core{
+      position:absolute;width:118px;height:118px;border-radius:50%;z-index:6;
+      display:grid;place-items:center;
+      background:radial-gradient(circle at 35% 28%,#5f8fd3 0%,#2f5fa8 28%,#132a52 72%);
+      border:1px solid rgba(255,255,255,.55);
+      box-shadow:0 0 0 8px rgba(47,95,168,.07),0 0 45px rgba(47,95,168,.38),inset 10px 8px 22px rgba(255,255,255,.14);
+      animation:coreFloat 4s ease-in-out infinite,corePulse 2.8s ease-in-out infinite;
+      transform:translateZ(55px);
     }
+    .core-letter{font-family:var(--serif);font-size:2rem;font-weight:700;letter-spacing:-.06em;color:#fff;text-shadow:0 2px 15px rgba(255,255,255,.25)}
+    .core-pulse{position:absolute;inset:-18px;border:1px solid rgba(229,143,176,.35);border-radius:50%;animation:expandPulse 2.8s ease-out infinite}
+    .orbit{position:absolute;border-radius:50%;border:1px solid rgba(47,95,168,.34);transform-style:preserve-3d;z-index:2;pointer-events:none}
+    .orbit-a{width:88%;height:34%;transform:rotateX(70deg) rotateZ(15deg);animation:orbitSpinA 7s linear infinite}
+    .orbit-b{width:82%;height:40%;transform:rotateX(68deg) rotateY(25deg) rotateZ(65deg);border-color:rgba(229,143,176,.42);animation:orbitSpinB 10s linear infinite reverse}
+    .orbit-c{width:94%;height:48%;transform:rotateX(73deg) rotateY(-24deg) rotateZ(120deg);border-color:rgba(19,42,82,.22);animation:orbitSpinC 13s linear infinite}
+    .ai-label{position:absolute;bottom:1px;z-index:8;font-size:.65rem;letter-spacing:.24em;font-weight:800;color:rgba(19,42,82,.58);white-space:nowrap}
+    @keyframes coreFloat{0%,100%{transform:translateZ(55px) translateY(0)}50%{transform:translateZ(55px) translateY(-9px)}}
+    @keyframes corePulse{0%,100%{box-shadow:0 0 0 8px rgba(47,95,168,.07),0 0 45px rgba(47,95,168,.38),inset 10px 8px 22px rgba(255,255,255,.14)}50%{box-shadow:0 0 0 16px rgba(229,143,176,.05),0 0 72px rgba(229,143,176,.42),inset 10px 8px 22px rgba(255,255,255,.18)}}
+    @keyframes expandPulse{0%{transform:scale(.72);opacity:.75}75%,100%{transform:scale(1.45);opacity:0}}
+    @keyframes orbitSpinA{from{transform:rotateX(70deg) rotateZ(15deg) rotate(0deg)}to{transform:rotateX(70deg) rotateZ(15deg) rotate(360deg)}}
+    @keyframes orbitSpinB{from{transform:rotateX(68deg) rotateY(25deg) rotateZ(65deg) rotate(0deg)}to{transform:rotateX(68deg) rotateY(25deg) rotateZ(65deg) rotate(360deg)}}
+    @keyframes orbitSpinC{from{transform:rotateX(73deg) rotateY(-24deg) rotateZ(120deg) rotate(0deg)}to{transform:rotateX(73deg) rotateY(-24deg) rotateZ(120deg) rotate(360deg)}}
+
 
     /* ABOUT */
     .about{background:#fff}
@@ -308,11 +320,17 @@ body.cursor-hover .cursor-word{
       </div>
 
           <div class="hero-art" aria-hidden="true">
-        <div class="ai-orb">
-          <div class="orb-core"></div>
-          <div class="orb-tilt orb-tilt-1"><div class="orb-ring"></div></div>
-          <div class="orb-tilt orb-tilt-2"><div class="orb-ring orb-ring-pink"></div></div>
-          <div class="orb-tilt orb-tilt-3"><div class="orb-ring"></div></div>
+        <div class="ai-neural-scene">
+          <div class="ai-label">AI NEURAL CORE</div>
+          <div class="neural-glow"></div>
+          <canvas id="neuralCanvas"></canvas>
+          <div class="neural-core">
+            <span class="core-letter">AI</span>
+            <span class="core-pulse"></span>
+          </div>
+          <div class="orbit orbit-a"></div>
+          <div class="orbit orbit-b"></div>
+          <div class="orbit orbit-c"></div>
         </div>
       </div>
     </div>
@@ -365,11 +383,6 @@ body.cursor-hover .cursor-word{
         <article class="timeline-item">
           <span class="dot"></span>
           <div class="timeline-meta">AI Department Intern</div>
-          </ul>
-        </article>
-        <article class="timeline-item">
-          <span class="dot"></span>
-          <div class="timeline-meta">AI Department Intern</div>
           <h3>Otech</h3>
           <div class="company">Supervised by Dr. Haider Al-Lawati</div>
           <ul>
@@ -382,7 +395,7 @@ body.cursor-hover .cursor-word{
         </article>
         <article class="timeline-item">
           <span class="dot"></span>
-          <div class="timeline-meta">Customer Value Management Tranie </div>
+          <div class="timeline-meta">Customer Value Management Trainee </div>
           <h3>Omantel</h3>
           <div class="company">Supervised by Asma</div>
           <ul>
@@ -570,6 +583,84 @@ body.cursor-hover .cursor-word{
     cursorWord.style.left = `${mouseX}px`;
     cursorWord.style.top = `${mouseY}px`;
   });
+
+  /* AI neural network animation */
+  const neuralCanvas = document.getElementById('neuralCanvas');
+  if (neuralCanvas) {
+    const ctx = neuralCanvas.getContext('2d');
+    const scene = neuralCanvas.parentElement;
+    let nodes = [];
+    let sceneW = 430, sceneH = 430;
+    let aiMouseX = 0, aiMouseY = 0;
+
+    function resizeNeuralCanvas() {
+      const rect = scene.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      sceneW = rect.width; sceneH = rect.height;
+      neuralCanvas.width = sceneW * dpr;
+      neuralCanvas.height = sceneH * dpr;
+      neuralCanvas.style.width = `${sceneW}px`;
+      neuralCanvas.style.height = `${sceneH}px`;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      nodes = Array.from({length:34}, (_, i) => ({
+        angle: Math.random() * Math.PI * 2,
+        radius: 58 + Math.random() * Math.min(sceneW,sceneH) * .35,
+        depth: Math.random() * 2 - 1,
+        speed: (.0015 + Math.random() * .003) * (i % 2 ? 1 : -1),
+        size: 1.7 + Math.random() * 2.4,
+        phase: Math.random() * Math.PI * 2
+      }));
+    }
+
+    scene.addEventListener('mousemove', e => {
+      const r = scene.getBoundingClientRect();
+      aiMouseX = (e.clientX - (r.left + r.width/2)) / r.width;
+      aiMouseY = (e.clientY - (r.top + r.height/2)) / r.height;
+    });
+    scene.addEventListener('mouseleave', () => { aiMouseX = 0; aiMouseY = 0; });
+
+    function drawNeuralNetwork(t) {
+      ctx.clearRect(0,0,sceneW,sceneH);
+      const cx = sceneW/2 + aiMouseX*12;
+      const cy = sceneH/2 + aiMouseY*12;
+      const projected = nodes.map(n => {
+        n.angle += n.speed;
+        const wobble = Math.sin(t*.001 + n.phase) * 7;
+        const x3 = Math.cos(n.angle) * (n.radius + wobble);
+        const z3 = Math.sin(n.angle) * (n.radius + wobble);
+        const y3 = n.depth * n.radius * .38;
+        const perspective = 1 + z3/900;
+        return {x:cx+x3*perspective, y:cy+y3*perspective, z:z3, s:n.size*(1+z3/900)};
+      });
+
+      projected.forEach((a,i)=>{
+        projected.forEach((b,j)=>{
+          if(j<=i) return;
+          const dx=a.x-b.x, dy=a.y-b.y;
+          const d=Math.hypot(dx,dy);
+          if(d<92){
+            ctx.beginPath();
+            ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+            ctx.strokeStyle=`rgba(47,95,168,${Math.max(0,.24-d/420)})`;
+            ctx.lineWidth=.7; ctx.stroke();
+          }
+        });
+      });
+
+      projected.forEach(n=>{
+        ctx.beginPath(); ctx.arc(n.x,n.y,Math.max(.8,n.s),0,Math.PI*2);
+        ctx.fillStyle=n.z>0?'rgba(229,143,176,.85)':'rgba(47,95,168,.72)';
+        ctx.shadowBlur=9; ctx.shadowColor=n.z>0?'rgba(229,143,176,.65)':'rgba(47,95,168,.55)';
+        ctx.fill(); ctx.shadowBlur=0;
+      });
+
+      requestAnimationFrame(drawNeuralNetwork);
+    }
+
+    resizeNeuralCanvas();
+    window.addEventListener('resize', resizeNeuralCanvas);
+    requestAnimationFrame(drawNeuralNetwork);
+  }
 
   function animateCursor() {
 
