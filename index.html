@@ -142,6 +142,31 @@
     .contact-link{padding:14px 17px;border:1px solid rgba(255,255,255,.2);border-radius:14px;color:white;background:rgba(255,255,255,.05);font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:.2s}
     .contact-link:hover{border-color:var(--rose);background:rgba(229,143,176,.10)}
 
+
+
+
+        /* Contact form */
+    .contact-form{position:relative;z-index:1;display:grid;gap:14px;margin-top:26px}
+    .contact-form label{font-size:.78rem;font-weight:700;letter-spacing:.04em;color:#d8e2f0;margin-bottom:-6px}
+    .contact-form input,.contact-form select{
+      width:100%;padding:13px 15px;border-radius:12px;border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.08);color:#fff;font-family:var(--sans);font-size:.92rem;
+    }
+    .contact-form select option{color:#132A52}
+    .contact-form input::placeholder{color:#aebbd2}
+    .contact-form input:focus,.contact-form select:focus{outline:2px solid var(--rose);border-color:transparent}
+    .contact-form .optional-tag{font-weight:400;color:#aebbd2;text-transform:none;letter-spacing:0}
+    .contact-form button{
+      justify-self:start;margin-top:6px;padding:13px 26px;border:0;border-radius:999px;
+      background:var(--rose);color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;transition:.2s;
+    }
+    .contact-form button:hover{background:var(--rose2)}
+    .preview-box{
+      margin-top:8px;padding:16px 18px;border-radius:14px;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
+      display:grid;gap:6px;font-size:.9rem;color:#e7ecf6;
+    }
+
     /* FOOTER */
     footer{background:#0e2140;color:#aab9cf;padding:28px 0;font-size:.78rem}
     .footer-inner{display:flex;justify-content:space-between;gap:20px}
@@ -370,12 +395,38 @@
           <h2>Let’s build something meaningful.</h2>
           <p>If you're hiring for an AI, data or software role—or simply want to talk about a project—I'd love to hear from you.</p>
         </div>
-        <div class="contact-links">
-          <a class="contact-link" href="mailto:[your email]">✉ &nbsp; [your email]</a>
-          <a class="contact-link" href="tel:[your phone]">◌ &nbsp; [your phone]</a>
-          <a class="contact-link" href="[your LinkedIn URL]" target="_blank" rel="noopener">in &nbsp; [your LinkedIn URL]</a>
-          <a class="contact-link" href="[your GitHub URL]" target="_blank" rel="noopener">⌘ &nbsp; [your GitHub URL]</a>
+               <div class="contact-links">
+          <a class="contact-link" href="[YOUR LINKEDIN URL]" target="_blank" rel="noopener">in &nbsp; View my LinkedIn</a>
         </div>
+
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <label for="cf-name">Your name</label>
+          <input id="cf-name" name="name" type="text" placeholder="Your name" required>
+
+          <label for="cf-method">Preferred contact method</label>
+          <select id="cf-method" name="preferred_method" required>
+            <option value="" disabled selected>Choose one</option>
+            <option value="WhatsApp">WhatsApp</option>
+            <option value="Phone call">Phone call</option>
+            <option value="Email">Email</option>
+          </select>
+
+          <label for="cf-contact">Your number or email</label>
+          <input id="cf-contact" name="contact_detail" type="text" placeholder="e.g. +968 9XXXXXXX or you@email.com" required>
+
+          <label for="cf-github">GitHub <span class="optional-tag">(optional)</span></label>
+          <input id="cf-github" name="github" type="url" placeholder="github.com/...">
+
+          <button type="button" id="previewBtn">Preview request</button>
+
+          <div id="previewBox" class="preview-box" hidden>
+            <p><strong>Name:</strong> <span id="pv-name"></span></p>
+            <p><strong>Contact via:</strong> <span id="pv-method"></span></p>
+            <p><strong>Details:</strong> <span id="pv-contact"></span></p>
+            <p><strong>GitHub:</strong> <span id="pv-github"></span></p>
+            <button type="submit" class="btn-confirm">Confirm & send request</button>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -404,7 +455,16 @@
     });
   });
 
- 
+   const previewBtn = document.getElementById('previewBtn');
+  if (previewBtn) {
+    previewBtn.addEventListener('click', () => {
+      document.getElementById('pv-name').textContent = document.getElementById('cf-name').value || '—';
+      document.getElementById('pv-method').textContent = document.getElementById('cf-method').value || '—';
+      document.getElementById('pv-contact').textContent = document.getElementById('cf-contact').value || '—';
+      document.getElementById('pv-github').textContent = document.getElementById('cf-github').value || 'Not provided';
+      document.getElementById('previewBox').hidden = false;
+    });
+  }
 </script>
 </body>
 </html>
