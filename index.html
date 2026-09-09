@@ -172,14 +172,81 @@
     .footer-inner{display:flex;justify-content:space-between;gap:20px}
     .footer-inner strong{color:white}
 
-      /* Static background name watermark — no longer follows the cursor */
-    .cursor-word{
-      position:absolute;top:10px;left:50%;transform:translateX(-50%);
-      z-index:0;pointer-events:none;white-space:nowrap;
-      font-family:var(--serif);font-weight:700;letter-spacing:-.07em;
-      font-size:clamp(3.2rem,10vw,8.5rem);color:rgba(19,42,82,.07);mix-blend-mode:multiply;
-    }
-    .cursor-word span{display:block;font-family:var(--sans);font-size:.55rem;letter-spacing:.28em;text-align:center;color:rgba(201,100,136,.5);margin-top:-.2em}
+/* INTERACTIVE CURSOR */
+.cursor-word{
+  position:fixed;
+  left:0;
+  top:0;
+  z-index:9999;
+  pointer-events:none;
+  white-space:nowrap;
+  font-family:var(--serif);
+  font-weight:700;
+  letter-spacing:-.07em;
+  font-size:clamp(3.2rem,10vw,8.5rem);
+  color:rgba(19,42,82,.07);
+  mix-blend-mode:multiply;
+  transform:translate(-50%,-50%);
+  transition:font-size .25s ease, opacity .25s ease;
+}
+
+.cursor-word span{
+  display:block;
+  font-family:var(--sans);
+  font-size:.55rem;
+  letter-spacing:.28em;
+  text-align:center;
+  color:rgba(201,100,136,.5);
+  margin-top:-.2em;
+}
+
+.cursor-dot{
+  position:fixed;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--rose2);
+  pointer-events:none;
+  z-index:10000;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 20px rgba(201,100,136,.55);
+}
+
+.cursor-ring{
+  position:fixed;
+  width:42px;
+  height:42px;
+  border:1px solid rgba(47,95,168,.55);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:
+    width .25s ease,
+    height .25s ease,
+    border-color .25s ease;
+}
+
+.cursor-trail{
+  position:fixed;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:rgba(229,143,176,.35);
+  pointer-events:none;
+  z-index:9997;
+  transform:translate(-50%,-50%);
+}
+
+body.cursor-hover .cursor-ring{
+  width:65px;
+  height:65px;
+  border-color:var(--rose2);
+}
+
+body.cursor-hover .cursor-word{
+  font-size:clamp(4rem,12vw,10rem);
+}
 
     @media(max-width:800px){
       .cursor-word,.cursor-ring,.cursor-trail{display:none!important}
@@ -200,7 +267,14 @@
   </style>
 </head>
 <body>
-<div class="cursor-word" aria-hidden="true">ABRAR<span>AI · DATA · SOFTWARE</span></div>
+<div class="cursor-word" aria-hidden="true">
+  ABRAR
+  <span>ARTIFICIAL INTELLIGENCE · MACHINE LEARNING</span>
+</div>
+
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-trail" aria-hidden="true"></div>
 
 <header>
   <div class="container">
@@ -225,7 +299,7 @@
         <div class="eyebrow">Computer Science × Artificial Intelligence</div>
         <div class="role">AI • Data • Software</div>
         <h1>Hi, I'm <em>Abrar</em>.</h1>
-        <p class="intro">nnn A Computer Science & Artificial Intelligence graduate who enjoys turning data, language and machine learning into practical solutions.</p>
+      <p class="intro">A Computer Science & Artificial Intelligence graduate who enjoys turning language, machine learning and intelligent systems into practical solutions.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#projects">View my work <span>↗</span></a>
           <a class="btn btn-secondary" href="#contact">Get in touch</a>
@@ -256,7 +330,7 @@
 <p>I’m Abrar, a Computer Science Artificial Intelligence graduate based in Muscat, Oman. My interests sit at the intersection of machine learning, NLP and data analysis.</p>
         </div>
         <div class="about-copy">
-          <p>I graduated from the Modern College of Business and Science (MCBS) with a <strong>3.9 out of 4.0 GPA</strong> and a place on the <strong>Dean's High Honor List</strong>.</p>
+          <p>I graduated from the Modern College of Business and Science (MCBS) with a <strong>3.9/4.0 GPA</strong> and a place on the <strong>Dean's High Honor List</strong>.</p>
           <p>Through internships, research and student leadership, I’ve worked across AI evaluation, NLP, dashboards, customer analytics and applied machine learning.</p>
           <p>I’m currently looking for full-time roles in AI, data and software, while also weighing an offer to begin postgraduate study at the University of Portsmouth.</p>
           <div class="education">
@@ -308,7 +382,7 @@
         </article>
         <article class="timeline-item">
           <span class="dot"></span>
-          <div class="timeline-meta">Customer Value Management Intern</div>
+          <div class="timeline-meta">Customer Value Management Tranie </div>
           <h3>Omantel</h3>
           <div class="company">Supervised by Asma</div>
           <ul>
@@ -396,7 +470,9 @@
           <p>If you're hiring for an AI, data or software role—or simply want to talk about a project—I'd love to hear from you.</p>
         </div>
                <div class="contact-links">
-          <a class="contact-link" href="[YOUR LINKEDIN URL]" target="_blank" rel="noopener">in &nbsp; View my LinkedIn</a>
+    <a class="contact-link" href="https://www.linkedin.com/in/abrar-mohammed-6218a729/" target="_blank" rel="noopener">
+  in &nbsp; View my LinkedIn ↗
+</a>
         </div>
 
         <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
@@ -465,6 +541,93 @@
       document.getElementById('previewBox').hidden = false;
     });
   }
+
+    /* =========================
+     INTERACTIVE CURSOR
+     ========================= */
+
+  const cursorWord = document.querySelector('.cursor-word');
+  const cursorDot = document.querySelector('.cursor-dot');
+  const cursorRing = document.querySelector('.cursor-ring');
+  const cursorTrail = document.querySelector('.cursor-trail');
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+
+  let ringX = mouseX;
+  let ringY = mouseY;
+
+  let trailX = mouseX;
+  let trailY = mouseY;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    cursorDot.style.left = `${mouseX}px`;
+    cursorDot.style.top = `${mouseY}px`;
+
+    cursorWord.style.left = `${mouseX}px`;
+    cursorWord.style.top = `${mouseY}px`;
+  });
+
+  function animateCursor() {
+
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+
+    trailX += (mouseX - trailX) * 0.08;
+    trailY += (mouseY - trailY) * 0.08;
+
+    cursorRing.style.left = `${ringX}px`;
+    cursorRing.style.top = `${ringY}px`;
+
+    cursorTrail.style.left = `${trailX}px`;
+    cursorTrail.style.top = `${trailY}px`;
+
+    requestAnimationFrame(animateCursor);
+  }
+
+  animateCursor();
+
+
+  /* Cursor grows when hovering clickable elements */
+
+  document
+    .querySelectorAll('a, button, input, select')
+    .forEach((element) => {
+
+      element.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-hover');
+      });
+
+      element.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cursor-hover');
+      });
+
+    });
+
+
+  /* ABRAR grows while scrolling */
+
+  window.addEventListener('scroll', () => {
+
+    const scrollY = window.scrollY;
+
+    const growth = Math.min(scrollY / 900, 1);
+
+    const size = 1 + growth * 1.35;
+
+    cursorWord.style.fontSize = `clamp(
+      ${3.2 * size}rem,
+      ${10 * size}vw,
+      ${8.5 * size}rem
+    )`;
+
+    cursorWord.style.opacity =
+      `${0.07 + growth * 0.08}`;
+
+  });
 </script>
 </body>
 </html>
